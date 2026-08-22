@@ -1,0 +1,12 @@
+# Other PlatformIO projects - do not track
+Test_arduino/
+test_esp32/
+
+# PlatformIO build files
+**/.pio/
+
+# Keep only the intended project in Git
+
+Test_arduino/
+test_esp32/
+**/.pio/
