@@ -17,13 +17,13 @@ PubSubClient client(espCLient);
 void reconnect()
 {
       while (!client.connected()) {
-        Serial.print("Attempting MQTT connection...");
+        Serial.println("Attempting MQTT connection...");
         CLientID += String(random(0xffff),HEX);
         if (client.connect(CLientID.c_str(),mqtt_user,mqtt_password)){
-            Serial.println("Connect to MQTT");
-            client.subscribe("fromNodeRed");
-            client.subscribe("ledState");
-            client.subscribe("JSONfromNodeRED");
+            Serial.println("Connected");
+            //client.subscribe("fromNodeRed");
+            //client.subscribe("ledState");
+            //client.subscribe("JSONfromNodeRED");
         }
         else
         {
@@ -37,17 +37,20 @@ void reconnect()
 }
 
 void callback(char* topic, byte* message, unsigned int length) {
-  //Serial.print("Message arrived [");
-  //Serial.print(topic);
-  //Serial.print("] ");
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+  Serial.print(" .message:  ");
+
   String messageTemp;      //Decleared a String
   
   for (int i=0;i<length;i++) {
     //Serial.print((char)payload[i]);
     messageTemp += (char)message[i];
   }
+  Serial.println();
 
-  if(String(topic) == "fromNodeRed"){
+  /*if(String(topic) == "fromNodeRed"){
     Serial.println(messageTemp);
   }
 
@@ -83,10 +86,11 @@ void callback(char* topic, byte* message, unsigned int length) {
     String output = String(device)+"\ntmeperature:"+String(temperature)+"  \nhumidity :"+String(humidity)+"\nlux"+String(lux)+" "+String(data_0)+" "+String(data_1);
     Serial.println(output);
 
-  }
+  }  */
 
-  
-    
+  if(String(topic) == "topic"){
+    //  action
+  }
 }
 
 void connectAP()
