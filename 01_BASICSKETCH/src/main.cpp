@@ -63,6 +63,24 @@ void printSensorValue(){
   Serial.println("=====================================================");
 }
 
+void sendSensorValuesMQTT(){   // This function is reference from the sendMQTTvalues function that is obtained from ArduinoJson website 
+  // Stream& output;
+  
+  //DynamicJsonDocument doc(1024);
+  JsonDocument doc;
+
+  doc["temperature"] = temp;
+  doc["pressure"] = pressure;
+  doc["altitude"] = altitude;
+  doc["lux"] = lux;
+
+  char buff[256];
+  serializeJson(doc, buff);
+
+  client.publish("weatherstation",buff);
+
+}
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
@@ -117,6 +135,8 @@ void loop() {
     //Serial.println("Blink");
 
     printSensorValue();
+
+    sendSensorValuesMQTT();
   }
 }
 
