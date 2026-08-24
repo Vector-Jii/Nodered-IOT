@@ -1,3 +1,4 @@
+#include "esp32-hal-gpio.h"
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <WiFi.h>
@@ -5,6 +6,7 @@
 #include "Credentials.h"
 
 extern byte led;
+extern byte fan;
 
 //MQTT
 String CLientID = "ESP32";
@@ -24,6 +26,7 @@ void reconnect()
             //client.subscribe("fromNodeRed");
             //client.subscribe("ledState");
             //client.subscribe("JSONfromNodeRED");
+            client.subscribe("fan");
         }
         else
         {
@@ -88,8 +91,14 @@ void callback(char* topic, byte* message, unsigned int length) {
 
   }  */
 
-  if(String(topic) == "topic"){
+  if(String(topic) == "fan"){
     //  action
+    if(messageTemp == "true"){
+      digitalWrite(fan, HIGH);
+    }
+    else {
+      digitalWrite(fan, LOW);
+    }
   }
 }
 

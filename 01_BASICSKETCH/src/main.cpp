@@ -17,6 +17,8 @@ float altitude;
 BH1750 lightmeter;
 float lux;
 
+byte fan = 18;
+
 //millis() : returns the number of milliseconds elapsed since the board started running its current program
 unsigned long previousMillis = millis();
 
@@ -95,6 +97,8 @@ void setup() {
   }
 
   lightmeter.begin();
+
+  pinMode(fan, OUTPUT);
 
   connectAP();                          // Connect to WIFI 
   client.setServer(mqtt_server,1883);   //class configures the MQTT server by specifying its domain and port
