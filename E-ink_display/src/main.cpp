@@ -6,6 +6,10 @@
 #include <GxEPD2_3C.h> // including both doesn't use more code or ram
 #include <GxEPD2_7C.h> // same for all three
 
+#include <Fonts/FreeMonoBold9pt7b.h>
+#include <Fonts/FreeSans9pt7b.h>
+
+
 #include "eink_image.h"
 
 //#define GxEPD2_DRIVER_CLASS GxEPD2_290c     // GDEW029Z10  128x296, UC8151 (IL0373), (WFT0290CZ10)
@@ -54,14 +58,28 @@ void helloWorldMinimum(String eInkText)
 
     display.fillScreen(GxEPD_WHITE);
     display.drawInvertedBitmap(0,0,eink_image,740,338,GxEPD_BLACK);
+
+    display.setFont(&FreeSans9pt7b);
+    display.setTextColor(GxEPD_BLACK);
+    display.setCursor(55,61);
+    display.print(25);
+
+    display.setCursor(155,61);
+    display.print("Raining");
+
+    display.setCursor(38,20);
+    display.print("9:00 pm");
+
+    display.setFont(&FreeMonoBold9pt7b);
+    display.setTextColor(GxEPD_BLACK);
+    display.setCursor(152,108);
+    display.print("This is different font");
   }
   while (display.nextPage());
 }
 
 void setup(){
     Serial.begin(115200);
-
-    helloWorldMinimum("Hello Tejas");
 
     connectAP();                          // Connect to WIFI 
     client.setServer(mqtt_server,1883);   //class configures the MQTT server by specifying its domain and port
